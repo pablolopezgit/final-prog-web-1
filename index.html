@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Centro de vacunación</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+		integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+		crossorigin="anonymous" />
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<link href="css/style.css" rel="stylesheet" />
+</head>
+
+<body>
+	<div class="container" data-ng-app="parcialApp" data-ng-controller="parcialCtrl" style="background-color: white; height: 1150px;">
+
+
+		<div class="row">
+			<h1 style="text-align: center"></h1>
+		</div>
+
+		<div class="row"
+			style="margin: 0px; height: 300px; width: 100%; background-image: url('https://previews.123rf.com/images/leoedition/leoedition1710/leoedition171000571/88752848-medical-background-medical-care-health-care-vector-medicine-illustration.jpg');">
+			<div class="col-md-8">
+				<h1 style="font-size: 45px;font-weight: 600;line-height: 50px;">
+					Saca un turno virtual en este portal
+				</h1>
+				<p>Para empezar, deberá completar con sus datos a continuación y luego elegir mes, dia y hora para su turno.</p>
+			</div>
+			<div class="col-md-4">
+				<div style="float: right;margin-top: 212px;">
+					<button type="button" class="btn btn-danger" data-ng-hide="step1 || step2" data-ng-click="activarSesion()"
+						style="height: 75px;width: 200px;font-size: 35px;">
+						Comenzar</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" style="text-align: center;" data-ng-show="mensajeFinal">
+			<h1>
+				Felicidades, el turno fue tomado con éxito
+			</h1>
+			<h4>
+				Para sacar otro turno, haga click en el botón COMENZAR
+			</h4>
+		</div>
+
+		<div class="row" data-ng-if="step1">
+
+			<div class="row mb-4">
+				<div class="col-lg-12 col-md-12">
+					<h3 class="text-center">Complete la informacion: </h3>
+					<form name="datosForm">
+						<div class="form-group col-lg-4 col-md-4">
+							<label>Nombres</label>
+							<input type="text" class="form-control" ng-model="userdata.nombres" required>
+						</div>
+						<div class="form-group col-lg-4 col-md-4">
+							<label>Apellidos</label>
+							<input type="text" class="form-control" ng-model="userdata.apellidos" required>
+						</div>
+						<div class="form-group col-lg-4 col-md-4">
+							<label>DNI</label>
+							<input type="text" class="form-control" ng-model="userdata.dni" required>
+						</div>
+						<div class="form-group col-lg-3 col-md-4">
+							<label>telefono de contacto</label>
+							<input type="text" class="form-control" ng-model="userdata.tel" required>
+						</div>
+						<div class="form-group col-lg-6 col-md-4">
+							<label>Dirección de correo electrónico</label>
+							<input type="email" class="form-control" ng-model="userdata.email" required>
+						</div>
+						<div class="form-group col-lg-3 col-md-4">
+							<label>Fecha de nacimiento</label>
+							<br>
+							<div style="float: left; width: 29%;">
+								<input placeholder="Dia" type="number" class="form-control" min="0" ng-model="userdata.dia" required>
+							</div>
+							<div style="float: left; width: 29%; margin-left: 6%; margin-right: 6%;">
+								<input placeholder="Mes" type="number" class="form-control" min="0" ng-model="userdata.mes" required>
+							</div>
+							<div style="float: left; width: 29%;">
+								<input placeholder="Año" type="number" class="form-control" min="0" ng-model="userdata.ano" required>
+							</div>
+							<!-- <input class="form-control" ng-model="userdata.fecnac" required> -->
+						</div>
+
+						<div class="text-center">
+							<button type="button" class="btn btn-primary" ng-disabled="datosForm.$invalid"
+								ng-click="guardarDatos()">Guardar</button>
+							<button type="button" class="btn btn-primary" ng-click="resetDatos()">Descartar</button>
+						</div>
+					</form>
+
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row" data-ng-if="step2">
+			<h1 style="text-align: center">Elija la vacuna</h1>
+
+			<div class="col-lg-3 col-md-3" style="text-align: center;" data-ng-click="getTurnos(1)">
+				<label class="wide">
+					<div class="card h-100" style="cursor: pointer;">
+						<div class="card-body">
+							<h1>ChinoFarm</h1>
+						</div>
+						<div class="card-footer">
+							<span>2 dosis</span>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<input type="radio" name="occurrences" ng-value="1" ng-model="selectedVac">
+						ChinoFarm
+					</div>
+				</label>
+			</div>
+
+			<div class="col-lg-3 col-md-3" style="text-align: center;" data-ng-click="getTurnos(2)">
+				<label class="wide">
+					<div class="card h-100" style="cursor: pointer;">
+						<div class="card-body">
+							<h1>Pfazziner</h1>
+						</div>
+						<div class="card-footer">
+							<span>2 dosis</span>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<input type="radio" name="occurrences" ng-value="2" ng-model="selectedVac" />
+						Pfazziner
+					</div>
+				</label>
+			</div>
+
+			<div class="col-lg-3 col-md-3" style="text-align: center;" data-ng-click="getTurnos(3)">
+				<label class="wide">
+					<div class="card h-100" style="cursor: pointer;">
+						<div class="card-body">
+							<h1>Astral Azteca</h1>
+						</div>
+						<div class="card-footer">
+							<span>2 dosis</span>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<input type="radio" name="occurrences" ng-value="3" ng-model="selectedVac" />
+						Astral Azteca
+					</div>
+				</label>
+			</div>
+
+			<div class="col-lg-3 col-md-3" style="text-align: center;" data-ng-click="getTurnos(4)">
+				<label class="wide">
+					<div class="card h-100" style="cursor: pointer;">
+						<div class="card-body">
+							<h1>Robert & Robert</h1>
+						</div>
+						<div class="card-footer">
+							<span>1 dosis</span>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<input type="radio" name="occurrences" ng-value="4" ng-model="selectedVac" />
+						Robert & Robert
+					</div>
+				</label>
+			</div>
+		</div>
+
+		<br>
+		<br>
+		<br>
+
+		<div class="row" data-ng-if="step3">
+
+			
+			<div class="col-lg-4 col-md-4">
+				<div style="text-align: center;">
+					<h2>
+						Elija el mes
+					</h2>
+
+					<div data-ng-repeat="mes in meses" data-ng-click="setMonth(mes)" class="fechas">
+						<p class="fecha-dia-hora">
+							{{nombreMes(mes)}}
+						</p>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-md-4">
+				<div  style="text-align: center;">
+					<h2>
+						Dias disponibles
+					</h2>
+
+					<div data-ng-repeat="dia in dias" data-ng-click="setDay(dia)" class="fechas">
+						<p class="fecha-dia-hora">
+							Turno para el {{dia}} de {{nombreMes(mes)}}
+						</p>
+					</div>
+
+				</div>
+			</div>
+			
+			<div class="col-lg-4 col-md-4">
+				<div  style="text-align: center;">
+					<h2>
+						Horarios disponibles
+					</h2>
+					<div data-ng-repeat="hora in horarios" data-ng-click="setTime(hora)" class="fechas">
+						<p class="fecha-dia-hora">
+							{{hora}}hs.
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+<textarea id="emailBody" data-ng-hide="true">
+Felicidades, tu turno para vacunarte contra el covid fue confirmado
+
+	Fecha: {{selectedDay}} de {{nombreMes(selectedMonth)}}
+	Horario: {{selectedHour}}hs.
+	Vacuna: {{nombreVac(selectedVac)}}
+
+No olvides llevar tu carnet vacunatorio y el DNI.
+GCBA.-
+
+
+</textarea>
+	
+		<div class="row" data-ng-if="step3" style="text-align: center;">
+			<button class="btn btn-primary" data-ng-disabled="!selectedHour || !selectedVac" data-ng-click="confirmarTurno()" style="height: 75px;width: 200px;font-size: 35px;">Enviar</button>
+		</div>
+		
+
+	</div>
+
+	<script src="js/ctrl.js"></script>
+</body>
+<footer>
+	<div class="container"><p class="m-0 text-center text-white">Pablo Federico Lopez Pazos - Programacion Web I - 2021</p></div>
+</footer>
+</html>
