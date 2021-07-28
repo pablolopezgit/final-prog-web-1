@@ -27,9 +27,9 @@
 			style="margin: 0px; height: 300px; width: 100%; background-image: url('https://previews.123rf.com/images/leoedition/leoedition1710/leoedition171000571/88752848-medical-background-medical-care-health-care-vector-medicine-illustration.jpg');">
 			<div class="col-md-8">
 				<h1 style="font-size: 45px;font-weight: 600;line-height: 50px;">
-					Saca un turno virtual en este portal
+					Sacá tu turno para vacunarte contra el Covid en éste portal
 				</h1>
-				<p>Para empezar, deberá completar con sus datos a continuación y luego elegir mes, dia y hora para su turno.</p>
+				<h3>Para empezar, completá con sus datos a continuación y luego elegí mes, dia y hora para tu turno.</h3>
 			</div>
 			<div class="col-md-4">
 				<div style="float: right;margin-top: 212px;">
@@ -191,7 +191,7 @@
 						Elija el mes
 					</h2>
 
-					<div data-ng-repeat="mes in meses" data-ng-click="setMonth(mes)" class="fechas">
+					<div data-ng-repeat="mes in meses" data-ng-click="setMonth(mes, $index)" data-ng-class="{'selected': $index == indexMes, 'fechas' : $index != indexMes}">
 						<p class="fecha-dia-hora">
 							{{nombreMes(mes)}}
 						</p>
@@ -206,9 +206,9 @@
 						Dias disponibles
 					</h2>
 
-					<div data-ng-repeat="dia in dias" data-ng-click="setDay(dia)" class="fechas">
+					<div data-ng-repeat="dia in dias" data-ng-click="setDay(dia, $index)" data-ng-class="{'selected': $index == indexDia, 'fechas' : $index != indexDia}">
 						<p class="fecha-dia-hora">
-							Turno para el {{dia}} de {{nombreMes(mes)}}
+							Turno para el {{dia}} de {{nombreMes(selectedMonth)}}
 						</p>
 					</div>
 
@@ -220,7 +220,7 @@
 					<h2>
 						Horarios disponibles
 					</h2>
-					<div data-ng-repeat="hora in horarios" data-ng-click="setTime(hora)" class="fechas">
+					<div data-ng-repeat="hora in horarios" data-ng-click="setTime(hora, $index)" data-ng-class="{'selected': $index == indexHora, 'fechas' : $index != indexHora}">
 						<p class="fecha-dia-hora">
 							{{hora}}hs.
 						</p>

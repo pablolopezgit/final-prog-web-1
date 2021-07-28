@@ -23,6 +23,10 @@ angular.module('parcialApp', []).controller('parcialCtrl', function ($scope, $ht
 	$scope.meses = [];
 	$scope.horarios = [];
 
+	$scope.indexMes = null;
+	$scope.indexDia = null;
+	$scope.indexHora = null;
+
 
 	/*			 */
 	/* START */
@@ -60,8 +64,8 @@ angular.module('parcialApp', []).controller('parcialCtrl', function ($scope, $ht
 		$scope.dias = [];
 		$scope.horarios = [];
 		$scope.selectedHour = null;
-
 		$scope.selectedVac = id;
+		$scope.indexMes = null;
 
 		$http.get('api/turnos/' + id)
 			.then(function (response) {
@@ -94,12 +98,14 @@ angular.module('parcialApp', []).controller('parcialCtrl', function ($scope, $ht
 			})
 	}
 
-	$scope.setMonth = function (mes) {
+	$scope.setMonth = function (mes, idx) {
 
 		$scope.selectedMonth = mes;
 		$scope.dias = [];
 		$scope.horarios = [];
 		$scope.selectedHour = null;
+		$scope.indexMes = idx;
+		$scope.indexDia = null;
 
 		$scope.vacData.forEach(fecha => {
 
@@ -111,12 +117,14 @@ angular.module('parcialApp', []).controller('parcialCtrl', function ($scope, $ht
 
 	}
 
-	$scope.setDay = function (dia) {
+	$scope.setDay = function (dia, idx) {
 
 		$scope.selectedDay = dia;
 		$scope.horarios = [];
 		$scope.selectedHour = null;
-
+		$scope.indexDia = idx;
+		$scope.indexHora = null;
+		
 		$scope.vacData.forEach(fecha => {
 
 			if (fecha.mes == $scope.selectedMonth &&
@@ -129,8 +137,12 @@ angular.module('parcialApp', []).controller('parcialCtrl', function ($scope, $ht
 
 	}
 
-	$scope.setTime = function (hora) {
+
+
+
+	$scope.setTime = function (hora, idx) {
 		$scope.selectedHour = hora;
+		$scope.indexHora = idx;
 	}
 
 

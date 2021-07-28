@@ -17,6 +17,14 @@ input[type=number] {
   cursor: pointer;
 }
 
+.selected {
+  border-color: #000!important;
+  border: 1px solid #ccc!important; 
+  margin-bottom: 10px; 
+  cursor: pointer;
+  background-color: lightgreen;
+}
+
 body {
   background-color: lightslategrey;
 }
